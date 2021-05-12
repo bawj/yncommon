@@ -50,7 +50,7 @@ public class RedisConfiguration {
 
         RedisStandaloneConfiguration standaloneConfiguration = new RedisStandaloneConfiguration();
         standaloneConfiguration.setHostName(hostName);
-//        standaloneConfiguration.setPassword(null);
+        standaloneConfiguration.setPassword(password);
         standaloneConfiguration.setPort(port);
         standaloneConfiguration.setDatabase(database);
 
