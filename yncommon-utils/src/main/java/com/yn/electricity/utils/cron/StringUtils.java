@@ -51,5 +51,27 @@ public class StringUtils {
         return true;
     }
 
+    /**
+     * 判断两个字符串值是否相等
+     * @param var1
+     * @param var2
+     * @return
+     */
+    public static boolean compareTo(String var1, String var2){
+        if(StringUtils.isEmpty(var1) && StringUtils.isNotEmpty(var2)){
+            return false;
+        }else if (StringUtils.isNotEmpty(var1) && StringUtils.isEmpty(var2)){
+            return false;
+        }else if(null == var1 && "".equals(var2)){
+            return true;
+        }else if(null == var2 && "".equals(var1)){
+            return true;
+        }else if(null == var1 && null == var2){
+            return true;
+        }else if (var1.equals(var2)){
+            return true;
+        }
+        return false;
+    }
 
 }
