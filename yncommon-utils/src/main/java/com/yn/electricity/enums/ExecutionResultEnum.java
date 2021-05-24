@@ -1,5 +1,9 @@
 package com.yn.electricity.enums;
 
+/**
+ * @author zzs
+ */
+
 public enum ExecutionResultEnum {
     SUCCESS("200", "SUCCESS", "操作成功", "操作成功"),
     FAIL("201", "FAIL", "操作失败", "操作失败"),

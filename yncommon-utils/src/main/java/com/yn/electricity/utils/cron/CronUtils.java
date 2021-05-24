@@ -212,7 +212,4 @@ public class CronUtils {
     }
 
 
-    public static void main(String[] args) {
-        System.out.println(CronUtils.getCron(CronEnum.HOUR_MINUTE, "0", "0"));
-    }
 }
