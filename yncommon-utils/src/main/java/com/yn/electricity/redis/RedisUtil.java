@@ -175,6 +175,15 @@ public class RedisUtil {
     }
 
     /**
+     * 取出所有hSet的值
+     * @param key key
+     * @return map
+     */
+    public Map<Object , Object> hEntries(String key){
+        return redisTemplate.opsForHash().entries(key);
+    }
+
+    /**
      * 获取hashKey对应的所有键值
      *
      * @param key 键

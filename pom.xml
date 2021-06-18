@@ -47,6 +47,8 @@
         <itextpdf.version>5.5.13</itextpdf.version>
         <itext-asian.version>5.2.0</itext-asian.version>
         <poi-ooxml.version>3.17</poi-ooxml.version>
+        <hutool-all.version>5.5.1</hutool-all.version>
+        <netty-version>0.8.0</netty-version>
     </properties>
 
     <distributionManagement>
@@ -219,7 +221,17 @@
                 <artifactId>itext-asian</artifactId>
                 <version>${itext-asian.version}</version>
             </dependency>
-
+            <dependency>
+                <groupId>cn.hutool</groupId>
+                <artifactId>hutool-all</artifactId>
+                <version>${hutool-all.version}</version>
+            </dependency>
+            <!--webSocket-->
+            <dependency>
+                <groupId>org.yeauty</groupId>
+                <artifactId>netty-websocket-spring-boot-starter</artifactId>
+                <version>${netty-version}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 

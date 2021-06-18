@@ -117,7 +117,6 @@ public class RedisHandleUtil {
      */
     public  RedisResult get(String key) {
         RedisResult result = new RedisResult();
-
         try {
             Object res =  key == null ? null : redisTemplate.opsForValue().get(key);
             return result.setSuccess(true).setData(res);
