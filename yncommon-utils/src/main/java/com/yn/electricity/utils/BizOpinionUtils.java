@@ -1,6 +1,9 @@
 package com.yn.electricity.utils;
 
 import com.yn.electricity.utils.cron.StringUtils;
+import org.springframework.util.CollectionUtils;
+
+import java.util.List;
 
 /**
  * @ClassName: BizOpinionUtils
@@ -65,6 +68,30 @@ public class BizOpinionUtils {
         }
         if(emptySize > 0){
             BizBusinessUtils.bizBusinessException(message, list);
+        }
+    }
+
+    /**
+     * 检查list集合是否是空
+     * @param message 日志信息
+     * @param list 参数
+     * @param <T>
+     */
+    public static <T> void checkListSize(String message, List<T> list){
+        if(CollectionUtils.isEmpty(list)){
+            BizBusinessUtils.bizBusinessException(message);
+        }
+    }
+
+    /**
+     * 检查对象实体类是否是空
+     * @param message 日志信息
+     * @param entity 参数
+     * @param <T>
+     */
+    public static <T> void EntityNotNull(String message, T entity){
+        if(null == entity){
+            BizBusinessUtils.bizBusinessException(message);
         }
     }
 
