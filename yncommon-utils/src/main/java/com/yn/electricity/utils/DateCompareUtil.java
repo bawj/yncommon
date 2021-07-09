@@ -1,5 +1,6 @@
 package com.yn.electricity.utils;
 
+import java.time.LocalDate;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -29,6 +30,28 @@ public class DateCompareUtil {
 
         long difference = after.getTimeInMillis() - before.getTimeInMillis();
         return difference / 1000 ;
+    }
+
+    /**
+     * 检查两个日期是否相等
+     * 注： currCal.get(Calendar.MONTH) 获取的月份会少1在获取时故加1
+     * @param currDay
+     * @param contrastDay
+     * @return
+     */
+    public static boolean checkDayEqual(Date currDay, Date contrastDay){
+        Calendar currCal = Calendar.getInstance();
+        currCal.setTime(currDay);
+        Calendar contrastCal = Calendar.getInstance();
+        contrastCal.setTime(contrastDay);
+
+        LocalDate currDate = LocalDate.of(currCal.get(Calendar.YEAR), currCal.get(Calendar.MONTH) +1, currCal.get(Calendar.DAY_OF_MONTH));
+        LocalDate contrastDate = LocalDate.of(contrastCal.get(Calendar.YEAR), contrastCal.get(Calendar.MONTH) +1, contrastCal.get(Calendar.DAY_OF_MONTH));
+        if (currDate.equals(contrastDate)){
+            return true;
+        }else {
+            return false;
+        }
     }
 
 }
