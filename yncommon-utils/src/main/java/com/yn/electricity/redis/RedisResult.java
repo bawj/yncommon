@@ -8,7 +8,7 @@ import java.io.Serializable;
  * @Date: 2021/6/2 11:14
  * @Description: 查询redis返回对象
  */
-public class RedisResult implements Serializable {
+public class RedisResult<T> implements Serializable {
     private static final long serialVersionUID = -6007908174709158659L;
 
     /**
@@ -18,14 +18,14 @@ public class RedisResult implements Serializable {
     /**
      * 数据返回
      */
-    private Object data;
+    private T data;
 
-    public RedisResult setSuccess(boolean success){
+    public RedisResult<T> setSuccess(boolean success){
         this.success = success;
         return this;
     }
 
-    public RedisResult setData(Object data){
+    public RedisResult<T> setData(T data){
         this.data = data;
         return this;
     }
@@ -35,7 +35,7 @@ public class RedisResult implements Serializable {
         return success;
     }
 
-    public Object getData() {
+    public T getData() {
         return data;
     }
 

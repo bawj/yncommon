@@ -31,22 +31,19 @@ public class RedisHandleUtil {
      *
      * @param key  键
      * @param time 时间(秒)
-     * @return
+     * @return RedisResult
      */
-    public  RedisResult expire(String key, long time) {
-        RedisResult result = new RedisResult();
-
-        if (time > 0) {
-            return result;
+    public void expire(String key, long time) {
+        RedisResult<String> result = new RedisResult<>();
+        if (time < 0) {
+            return;
         }
-
         try {
-            redisTemplate.expire(key, time, TimeUnit.SECONDS);
-            return result.setSuccess(true);
+            Boolean expire = redisTemplate.expire(key, time, TimeUnit.SECONDS);
+            log.info("#RedisHandleUtil.expire# 设置过期时间 expire = {}" , expire);
         } catch (RedisConnectionFailureException e) {
             log.error(e.getMessage(), e);
         }
-        return result;
     }
 
     /**
@@ -55,9 +52,8 @@ public class RedisHandleUtil {
      * @param key 键(不能为 Null)
      * @return 时间(秒) 返回0代表永久有效
      */
-    public  RedisResult getExpire(String key) {
-        RedisResult result = new RedisResult();
-
+    public  RedisResult<String> getExpire(String key) {
+        RedisResult<String> result = new RedisResult<>();
         try {
             redisTemplate.getExpire(key, TimeUnit.SECONDS);
             return result.setSuccess(true);
@@ -73,9 +69,8 @@ public class RedisHandleUtil {
      * @param key 键(不能为 Null)
      * @return true 存在 false 不存在
      */
-    public  RedisResult hashKey(String key) {
-        RedisResult result = new RedisResult();
-
+    public RedisResult<String> hashKey(String key) {
+        RedisResult<String> result = new RedisResult<>();
         try {
             redisTemplate.hasKey(key);
             return result.setSuccess(true);
@@ -90,9 +85,8 @@ public class RedisHandleUtil {
      *
      * @param key 可以传一个值 或多个
      */
-    public  RedisResult del(String... key) {
-        RedisResult result = new RedisResult();
-
+    public  RedisResult<String> del(String... key) {
+        RedisResult<String> result = new RedisResult<>();
         try {
             if(key != null && key.length > 0) {
                 redisTemplate.delete(key[0]);
@@ -115,8 +109,8 @@ public class RedisHandleUtil {
      * @param key 键
      * @return 值
      */
-    public  RedisResult get(String key) {
-        RedisResult result = new RedisResult();
+    public  RedisResult<Object> get(String key) {
+        RedisResult<Object> result = new RedisResult<>();
         try {
             Object res =  key == null ? null : redisTemplate.opsForValue().get(key);
             return result.setSuccess(true).setData(res);
@@ -133,9 +127,8 @@ public class RedisHandleUtil {
      * @param value 值
      * @return true 成功 false 失败
      */
-    public  RedisResult set(String key, Object value) {
-        RedisResult result = new RedisResult();
-
+    public  RedisResult<Object> set(String key, Object value) {
+        RedisResult<Object> result = new RedisResult<>();
         try {
             redisTemplate.opsForValue().set(key, value);
             return result.setSuccess(true);
@@ -153,9 +146,8 @@ public class RedisHandleUtil {
      * @param time  时间(秒) time > 0 若 time <= 0 将设置无限期
      * @return true 成功 false 失败
      */
-    public  RedisResult set(String key, Object value, long time) {
-        RedisResult result = new RedisResult();
-
+    public  RedisResult<Object> set(String key, Object value, long time) {
+        RedisResult<Object> result = new RedisResult<>();
         try {
             redisTemplate.opsForValue().set(key, value, time, TimeUnit.SECONDS);
             return result.setSuccess(true);
@@ -172,8 +164,8 @@ public class RedisHandleUtil {
      * @param delta 要增加几(大于0)
      * @return
      */
-    public  RedisResult incr(String key, long delta) {
-        RedisResult result = new RedisResult();
+    public  RedisResult<Object> incr(String key, long delta) {
+        RedisResult<Object> result = new RedisResult<>();
 
         if (delta < 0) {
             throw new RuntimeException("递增因子必须大于0");
@@ -195,8 +187,8 @@ public class RedisHandleUtil {
      * @param delta 要减少几(小于0)
      * @return
      */
-    public  RedisResult decr(String key, long delta) {
-        RedisResult result = new RedisResult();
+    public  RedisResult<Object> decr(String key, long delta) {
+        RedisResult<Object> result = new RedisResult<>();
 
         if (delta < 0) {
             throw new RuntimeException("递减因子必须大于0");
@@ -220,8 +212,8 @@ public class RedisHandleUtil {
      * @param key  键 不能为null
      * @param item 项 不能为null
      */
-    public  RedisResult hGet(String key, String item) {
-        RedisResult result = new RedisResult();
+    public  RedisResult<Object> hGet(String key, String item) {
+        RedisResult<Object> result = new RedisResult<Object>();
 
         try {
             Object res = redisTemplate.opsForHash().get(key, item);
@@ -238,8 +230,8 @@ public class RedisHandleUtil {
      * @param key 键
      * @return 对应的多个键值
      */
-    public  RedisResult hmGet(String key) {
-        RedisResult result = new RedisResult();
+    public  RedisResult<Map<Object, Object>> hmGet(String key) {
+        RedisResult<Map<Object, Object>> result = new RedisResult<>();
 
         try {
             Map<Object, Object> res = redisTemplate.opsForHash().entries(key);

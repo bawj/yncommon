@@ -1,11 +1,12 @@
 package com.yn.electricity.redis;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
 
+import javax.annotation.Resource;
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -20,7 +21,7 @@ import java.util.concurrent.TimeUnit;
 @Component
 public class RedisUtil {
 
-    @Autowired
+    @Resource
     private RedisTemplate<String, Object> redisTemplate;
 
     /**
@@ -67,6 +68,19 @@ public class RedisUtil {
             return false;
         }
     }
+
+    public int hSize(String key) {
+        return redisTemplate.opsForHash().size(key).intValue();
+    }
+
+    public Set<Object> hKeys(String Key){
+        return redisTemplate.opsForHash().keys(Key);
+    }
+
+    public Collection<Object> hGetValue(String key){
+        return redisTemplate.opsForHash().values(key);
+    }
+
 
     /**
      * 删除缓存
@@ -176,10 +190,11 @@ public class RedisUtil {
 
     /**
      * 取出所有hSet的值
+     *
      * @param key key
      * @return map
      */
-    public Map<Object , Object> hEntries(String key){
+    public Map<Object, Object> hEntries(String key) {
         return redisTemplate.opsForHash().entries(key);
     }
 

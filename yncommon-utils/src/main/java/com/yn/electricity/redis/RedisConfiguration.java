@@ -42,6 +42,8 @@ public class RedisConfiguration {
     private int maxWait;
     @Value("${spring.redis.lettuce.shutdown-timeout}")
     private int timeout;
+    @Value("${spring.redis.hashValueSerializer}")
+    private boolean flag;
 
     // 自定义RedisTemplate
     @Bean
@@ -73,11 +75,15 @@ public class RedisConfiguration {
 
         // 设置key\value序列化方式
         template.setKeySerializer(StringRedisSerializer.UTF_8);
-        template.setValueSerializer(serializer);
+        if (!flag){
+            template.setValueSerializer(serializer);
+        }
 
         // 为Hash类型设置key\value序列化方式
         template.setHashKeySerializer(StringRedisSerializer.UTF_8);
-        template.setHashValueSerializer(serializer);
+        if (!flag){
+            template.setHashValueSerializer(serializer);
+        }
 
         factory.afterPropertiesSet();
 
